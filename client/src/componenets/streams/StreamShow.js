@@ -22,6 +22,10 @@ class StreamShow extends Component {
     this.buildPlayer();
   }
 
+  componentWillUnmount() {
+    this.player.destroy();
+  }
+
   buildPlayer() {
     if (this.player || !this.props.stream) {
       return;
@@ -31,10 +35,13 @@ class StreamShow extends Component {
 
     this.player = flv.createPlayer({
       type: 'flv',
-      url: `http://localhose:8000/live/${id}`
+      url: `http://localhost:8000/live/${id}.flv`
     });
     this.player.attachMediaElement(this.videoRef.current);
     this.player.load();
+    // This plays the video automatically
+    // however, some browser do not allow you to play automatically
+    // this.player.play();
   }
 
   render() {
